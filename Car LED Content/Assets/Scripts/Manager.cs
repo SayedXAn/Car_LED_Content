@@ -7,20 +7,112 @@ using UnityEngine.UI;
 public class Manager : MonoBehaviour
 {
     public Image[] cars;
-    int currState = 0;
+    int currState = -1;
     Keyboard keyboard = Keyboard.current;
+
+    public float startDis = 100f;
+    public float firstDis = 400f;
+    public float secondDis = 400f;
+    public float thirdDis = 400f;
+    public float fourthDis = 400f;
     void Start()
     {
         DOTween.Init();
+        firstDis += startDis;
+        secondDis += firstDis;
+        thirdDis += secondDis;
+        fourthDis += thirdDis;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(keyboard.wKey.wasPressedThisFrame && currState != 1)
+        if (keyboard.backspaceKey.wasPressedThisFrame && currState != 0)
+        {
+            currState = 0;
+            ResetSeq();
+        }
+        if (keyboard.qKey.wasPressedThisFrame && currState != 1)
         {
             currState = 1;
-            cars[0].gameObject.transform.DOMoveX(500f, 1f);
+            StartingSeq();
+        }
+        if (keyboard.wKey.wasPressedThisFrame && currState != 2)
+        {
+            currState = 2;
+            SecondSeq();
+        }
+        if (keyboard.eKey.wasPressedThisFrame && currState != 3)
+        {
+            currState = 3;
+            ThirdSeq();
+        }
+        if (keyboard.rKey.wasPressedThisFrame && currState != 4)
+        {
+            currState = 4;
+            FusionSeq();
+        }
+    }
+    public void ResetSeq()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            cars[i].transform.DOMoveX(startDis, 1f);
+        }
+        for (int i = 4; i < 8; i++)
+        {
+            cars[i].transform.DOMoveX(3200 - startDis, 1f);
+        }
+    }
+
+    public void StartingSeq()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            cars[i].transform.DOMoveX(firstDis, 1f);
+        }
+        for (int i = 4; i < 8; i++)
+        {
+            cars[i].transform.DOMoveX(3200- firstDis, 1f);
+        }
+    }
+
+    public void SecondSeq()
+    {
+        
+        for (int i = 0; i < 4; i++)
+        {
+            cars[i].transform.DOMoveX(Random.Range(secondDis-100, secondDis+100), 1f);
+        }
+        for (int i = 4; i < 8; i++)
+        {
+            cars[i].transform.DOMoveX(3200 - Random.Range(secondDis - 100, secondDis + 100), 1f);
+        }
+    }
+
+    public void ThirdSeq()
+    {
+        
+        for (int i = 0; i < 4; i++)
+        {
+            cars[i].transform.DOMoveX(Random.Range(thirdDis - 100, thirdDis + 100), 1f);
+        }
+        for (int i = 4; i < 8; i++)
+        {
+            cars[i].transform.DOMoveX(3200 - Random.Range(thirdDis - 100, thirdDis + 100), 1f);
+        }
+    }
+
+    public void FusionSeq()
+    {
+        
+        for (int i = 0; i < 4; i++)
+        {
+            cars[i].transform.DOMoveX(Random.Range(fourthDis - 100, fourthDis + 100), 1f);
+        }
+        for (int i = 4; i < 8; i++)
+        {
+            cars[i].transform.DOMoveX(3200 - Random.Range(fourthDis - 100, fourthDis + 100), 1f);
         }
     }
 }
