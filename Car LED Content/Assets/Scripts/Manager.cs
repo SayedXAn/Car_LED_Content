@@ -13,14 +13,27 @@ public class Manager : MonoBehaviour
     int currState = -1;
     Keyboard keyboard = Keyboard.current;
 
-    public GameObject textBox;
+    [Header("UI")]
+    public GameObject answerTextBox;
+    public GameObject questionTextBox;
     public TMP_Text correctAnswer;
+    public TMP_Text question;
+
+    [Header("Questions")]
+    public string[] questions;
+    [Header("Answers")]
+    public string[] answers;
+    [Header("Variables")]
+
     public float textBoxHeight = 100f;
     public float startDis = 100f;
     public float firstDis = 400f;
     public float secondDis = 400f;
     public float thirdDis = 400f;
     public float fourthDis = 400f;
+    public float fifthDis = 400f;
+    public float fusionDis = 400f;
+    
     void Start()
     {
         DOTween.Init();
@@ -28,6 +41,7 @@ public class Manager : MonoBehaviour
         secondDis += firstDis;
         thirdDis += secondDis;
         fourthDis += thirdDis;
+        fifthDis += fourthDis;
     }
 
     // Update is called once per frame
@@ -56,67 +70,90 @@ public class Manager : MonoBehaviour
         if (keyboard.rKey.wasPressedThisFrame && currState != 4)
         {
             currState = 4;
+            FourthSeq();
+        }
+        if (keyboard.tKey.wasPressedThisFrame && currState != 5)
+        {
+            currState = 5;
+            FifthSeq();
+        }
+        if (keyboard.yKey.wasPressedThisFrame && currState != 6)
+        {
+            currState = 6;
             FusionSeq();
         }
-        if (keyboard.f12Key.wasPressedThisFrame && currState != 4)
+        if (keyboard.f12Key.wasPressedThisFrame && currState != 7)
         {
             SceneManager.LoadScene("LED");
         }
     }
     public void ResetSeq()
     {        
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 8; i++)
         {
-            cars[i].transform.DOMoveX(startDis, 1f);
-        }
-        for (int i = 4; i < 8; i++)
-        {
-            cars[i].transform.DOMoveX(3200 - startDis, 1f);
+            cars[i].transform.DOMoveY(startDis, 1f);
         }
     }
 
     public void StartingSeq()
     {
-        ShowAnswer();
-        for (int i = 0; i < 4; i++)
+        //ShowQuestion(0);
+        //ShowAnswer(0);
+        for (int i = 0; i < 8; i++)
         {
-            cars[i].transform.DOMoveX(firstDis, 1f);
-        }
-        for (int i = 4; i < 8; i++)
-        {
-            cars[i].transform.DOMoveX(3200- firstDis, 1f);
+            cars[i].transform.DOMoveY(firstDis, 1f);
         }
     }
 
     public void SecondSeq()
     {
-        ShowAnswer();
-        for (int i = 0; i < 4; i++)
+        ShowQuestion(0);
+        ShowAnswer(0);
+        for (int i = 0; i < 8; i++)
         {
-            cars[i].transform.DOMoveX(Random.Range(secondDis-100, secondDis+100), 1f);
-        }
-        for (int i = 4; i < 8; i++)
-        {
-            cars[i].transform.DOMoveX(3200 - Random.Range(secondDis - 100, secondDis + 100), 1f);
+            cars[i].transform.DOMoveY(Random.Range(secondDis, secondDis+20), 1f);
+            cars[i].transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
     public void ThirdSeq()
     {
-        ShowAnswer();
-        for (int i = 0; i < 4; i++)
+        ShowQuestion(1);
+        ShowAnswer(1);
+        for (int i = 0; i < 8; i++)
         {
-            cars[i].transform.DOMoveX(Random.Range(thirdDis - 100, thirdDis + 100), 1f);
+            cars[i].transform.DOMoveY(Random.Range(thirdDis, thirdDis+20), 1f);
+            cars[i].transform.GetChild(0).gameObject.SetActive(true);
         }
-        for (int i = 4; i < 8; i++)
+    }
+    public void FourthSeq()
+    {
+        ShowQuestion(2);
+        ShowAnswer(2);
+        for (int i = 0; i < 8; i++)
         {
-            cars[i].transform.DOMoveX(3200 - Random.Range(thirdDis - 100, thirdDis + 100), 1f);
+            cars[i].transform.DOMoveY(Random.Range(fourthDis, fourthDis + 20), 1f);
+            cars[i].transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
+    public void FifthSeq()
+    {
+        ShowQuestion(3);
+        ShowAnswer(3);
+        for (int i = 0; i < 8; i++)
+        {
+            cars[i].transform.DOMoveY(Random.Range(fifthDis, fifthDis  + 20), 1f);
+            cars[i].transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
     public void FusionSeq()
     {
-        ShowAnswer();
+        for (int i = 0; i < 8; i++)
+        {
+            cars[i].transform.GetChild(0).gameObject.SetActive(false);
+        }
+        //ShowAnswer();
         Sequence mySequence = DOTween.Sequence();
         mySequence.Append(cars[0].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
         mySequence.Join(cars[0].DOFade(0.5f, 0.25f));
@@ -138,12 +175,22 @@ public class Manager : MonoBehaviour
         mySequence.Join(jeep.transform.DOScale(1f, 0.5f));
     }
 
-    public void ShowAnswer()
+    public void ShowAnswer(int ind)
     {
-        textBox.SetActive(true);
+        answerTextBox.SetActive(true);
+        correctAnswer.text = answers[ind];
         Sequence mySequence = DOTween.Sequence();
-        mySequence.Append(textBox.transform.DOMoveY(textBoxHeight, 0.5f));
-        mySequence.Append(textBox.transform.DOMoveY(-1000f, 0.5f).SetDelay(2f));
+        mySequence.Append(answerTextBox.transform.DOMoveY(textBoxHeight, 0.5f));
+        mySequence.Append(answerTextBox.transform.DOMoveY(-1000f, 0.5f).SetDelay(2f));
+
+    }
+    public void ShowQuestion(int ind)
+    {
+        questionTextBox.SetActive(true);
+        question.text = questions[ind];
+        //Sequence mySequence = DOTween.Sequence();
+        //mySequence.Append(questionTextBox.transform.DOMoveY(textBoxHeight, 0.5f));
+        //mySequence.Append(questionTextBox.transform.DOMoveY(-1000f, 0.5f).SetDelay(2f));
 
     }
 }
