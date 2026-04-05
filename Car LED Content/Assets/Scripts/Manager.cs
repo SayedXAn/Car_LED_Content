@@ -33,6 +33,8 @@ public class Manager : MonoBehaviour
     public float fourthDis = 400f;
     public float fifthDis = 400f;
     public float fusionDis = 400f;
+
+    public AudioSource AS;
     
     void Start()
     {
@@ -99,6 +101,7 @@ public class Manager : MonoBehaviour
     {
         //ShowQuestion(0);
         //ShowAnswer(0);
+        AS.Play();
         for (int i = 0; i < 8; i++)
         {
             cars[i].transform.DOMoveY(firstDis, 1f);
