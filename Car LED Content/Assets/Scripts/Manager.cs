@@ -1,12 +1,14 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
 public class Manager : MonoBehaviour
 {
     public Image[] cars;
+    public Image jeep;
     int currState = -1;
     Keyboard keyboard = Keyboard.current;
 
@@ -51,6 +53,10 @@ public class Manager : MonoBehaviour
         {
             currState = 4;
             FusionSeq();
+        }
+        if (keyboard.f12Key.wasPressedThisFrame && currState != 4)
+        {
+            SceneManager.LoadScene("LED");
         }
     }
     public void ResetSeq()
@@ -105,14 +111,32 @@ public class Manager : MonoBehaviour
 
     public void FusionSeq()
     {
-        
-        for (int i = 0; i < 4; i++)
-        {
-            cars[i].transform.DOMoveX(Random.Range(fourthDis - 100, fourthDis + 100), 1f);
-        }
-        for (int i = 4; i < 8; i++)
-        {
-            cars[i].transform.DOMoveX(3200 - Random.Range(fourthDis - 100, fourthDis + 100), 1f);
-        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    cars[i].transform.DOMoveX(Random.Range(fourthDis - 100, fourthDis + 100), 1f);
+        //}
+        //for (int i = 4; i < 8; i++)
+        //{
+        //    cars[i].transform.DOMoveX(3200 - Random.Range(fourthDis - 100, fourthDis + 100), 1f);
+        //}
+        Sequence mySequence = DOTween.Sequence();
+        mySequence.Append(cars[0].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[0].DOFade(0.5f, 0.25f));
+        mySequence.Append(cars[1].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[1].DOFade(0.5f, 0.25f));
+        mySequence.Append(cars[2].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[2].DOFade(0.5f, 0.25f));
+        mySequence.Append(cars[3].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[3].DOFade(0.5f, 0.25f));
+        mySequence.Append(cars[4].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[4].DOFade(0.5f, 0.25f));
+        mySequence.Append(cars[5].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[5].DOFade(0.5f, 0.25f));
+        mySequence.Append(cars[6].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[6].DOFade(0.5f, 0.25f));
+        mySequence.Append(cars[7].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
+        mySequence.Join(cars[7].DOFade(0.5f, 0.25f));
+        mySequence.Append(jeep.DOFade(1f, 0.5f));
+        mySequence.Join(jeep.transform.DOScale(1f, 0.5f));
     }
 }
