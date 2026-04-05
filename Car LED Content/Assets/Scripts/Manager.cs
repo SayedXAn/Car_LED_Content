@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,9 @@ public class Manager : MonoBehaviour
     int currState = -1;
     Keyboard keyboard = Keyboard.current;
 
+    public GameObject textBox;
+    public TMP_Text correctAnswer;
+    public float textBoxHeight = 100f;
     public float startDis = 100f;
     public float firstDis = 400f;
     public float secondDis = 400f;
@@ -60,7 +64,7 @@ public class Manager : MonoBehaviour
         }
     }
     public void ResetSeq()
-    {
+    {        
         for (int i = 0; i < 4; i++)
         {
             cars[i].transform.DOMoveX(startDis, 1f);
@@ -73,7 +77,8 @@ public class Manager : MonoBehaviour
 
     public void StartingSeq()
     {
-        for(int i = 0; i < 4; i++)
+        ShowAnswer();
+        for (int i = 0; i < 4; i++)
         {
             cars[i].transform.DOMoveX(firstDis, 1f);
         }
@@ -85,7 +90,7 @@ public class Manager : MonoBehaviour
 
     public void SecondSeq()
     {
-        
+        ShowAnswer();
         for (int i = 0; i < 4; i++)
         {
             cars[i].transform.DOMoveX(Random.Range(secondDis-100, secondDis+100), 1f);
@@ -98,7 +103,7 @@ public class Manager : MonoBehaviour
 
     public void ThirdSeq()
     {
-        
+        ShowAnswer();
         for (int i = 0; i < 4; i++)
         {
             cars[i].transform.DOMoveX(Random.Range(thirdDis - 100, thirdDis + 100), 1f);
@@ -111,14 +116,7 @@ public class Manager : MonoBehaviour
 
     public void FusionSeq()
     {
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    cars[i].transform.DOMoveX(Random.Range(fourthDis - 100, fourthDis + 100), 1f);
-        //}
-        //for (int i = 4; i < 8; i++)
-        //{
-        //    cars[i].transform.DOMoveX(3200 - Random.Range(fourthDis - 100, fourthDis + 100), 1f);
-        //}
+        ShowAnswer();
         Sequence mySequence = DOTween.Sequence();
         mySequence.Append(cars[0].transform.DOMove(new Vector3(1600f, 320f, 0), 0.5f));
         mySequence.Join(cars[0].DOFade(0.5f, 0.25f));
@@ -138,5 +136,14 @@ public class Manager : MonoBehaviour
         mySequence.Join(cars[7].DOFade(0.5f, 0.25f));
         mySequence.Append(jeep.DOFade(1f, 0.5f));
         mySequence.Join(jeep.transform.DOScale(1f, 0.5f));
+    }
+
+    public void ShowAnswer()
+    {
+        textBox.SetActive(true);
+        Sequence mySequence = DOTween.Sequence();
+        mySequence.Append(textBox.transform.DOMoveY(textBoxHeight, 0.5f));
+        mySequence.Append(textBox.transform.DOMoveY(-1000f, 0.5f).SetDelay(2f));
+
     }
 }
