@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Video;
 
 public class VIdQues : MonoBehaviour
@@ -8,7 +7,7 @@ public class VIdQues : MonoBehaviour
     public GameObject[] questions;
     public VideoPlayer vp;
     public RenderTexture rt;
-    Keyboard keyboard = Keyboard.current;
+    //Keyboard keyboard = Keyboard.current;
     int currState = 0;
     void Start()
     {
@@ -18,7 +17,7 @@ public class VIdQues : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (keyboard.digit1Key.wasPressedThisFrame && (currState == 0 || currState == 1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && (currState == 0 || currState == 1))
         {
             if(currState == 1)
             {
@@ -33,7 +32,7 @@ public class VIdQues : MonoBehaviour
                 questions[0].SetActive(true);
             }
         }
-        if (keyboard.digit2Key.wasPressedThisFrame && (currState == 0 || currState == 2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && (currState == 0 || currState == 2))
         {
             if (currState == 2)
             {
@@ -48,7 +47,7 @@ public class VIdQues : MonoBehaviour
                 questions[1].SetActive(true);
             }
         }
-        if (keyboard.digit3Key.wasPressedThisFrame && (currState == 0 || currState == 3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && (currState == 0 || currState == 3))
         {
             if (currState == 3)
             {
@@ -64,7 +63,7 @@ public class VIdQues : MonoBehaviour
             }
         }
 
-        if (keyboard.zKey.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             //vp.Stop();
             //rt.Release();
@@ -76,7 +75,7 @@ public class VIdQues : MonoBehaviour
             vp.isLooping = true;
             vp.Play();
         }
-        if (keyboard.xKey.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.X))
         {
             //vp.Stop();
             //rt.Release();
@@ -86,7 +85,7 @@ public class VIdQues : MonoBehaviour
             vp.isLooping = false;
             vp.Play();
         }
-        if(keyboard.cKey.wasPressedThisFrame)
+        if(Input.GetKeyDown(KeyCode.C))
         {
             //vp.Stop();
             //rt.Release();
@@ -96,7 +95,7 @@ public class VIdQues : MonoBehaviour
             vp.isLooping = false;
             vp.Play();
         }
-        if (keyboard.vKey.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.V))
         {
             //vp.Stop();
             //rt.Release();
