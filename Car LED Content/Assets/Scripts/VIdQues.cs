@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class VIdQues : MonoBehaviour
@@ -12,11 +13,11 @@ public class VIdQues : MonoBehaviour
     //Keyboard keyboard = Keyboard.current;
     int currState = 0;
 
-    public AudioSource rev;
-    public AudioSource race;
+    //public AudioSource rev;
+    //public AudioSource race;
     void Start()
     {
-        StartCoroutine(CheckRev());
+        //StartCoroutine(CheckRev());
     }
 
     // Update is called once per frame
@@ -34,6 +35,8 @@ public class VIdQues : MonoBehaviour
             {
                 currState = 1;
                 vp.Pause();
+                questions[0].GetComponent<Image>().enabled = true;
+                questions[0].transform.GetChild(0).gameObject.SetActive(false);
                 questions[0].SetActive(true);
             }
         }
@@ -49,6 +52,8 @@ public class VIdQues : MonoBehaviour
             {
                 currState = 2;
                 vp.Pause();
+                questions[1].GetComponent<Image>().enabled = true;
+                questions[1].transform.GetChild(0).gameObject.SetActive(false);
                 questions[1].SetActive(true);
             }
         }
@@ -68,6 +73,17 @@ public class VIdQues : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Q) && currState == 1)
+        {
+            questions[0].GetComponent<Image>().enabled = false;
+            questions[0].transform.GetChild(0).gameObject.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.W) && currState == 2)
+        {
+            questions[1].GetComponent<Image>().enabled = false;
+            questions[1].transform.GetChild(0).gameObject.SetActive(true);
+        }
+
         if (Input.GetKeyDown(KeyCode.Z))
         {
             //vp.Stop();
@@ -79,9 +95,9 @@ public class VIdQues : MonoBehaviour
             currState = 0;
             //vp.isLooping = false;
             vp.Play();
-            rev.DOFade(0, 0.5f);
-            rev.Play();
-            StartCoroutine(CheckRev());
+            //rev.DOFade(0, 0.5f);
+            //rev.Play();
+            //StartCoroutine(CheckRev());
             
         }
         if (Input.GetKeyDown(KeyCode.X))
@@ -91,10 +107,10 @@ public class VIdQues : MonoBehaviour
             questions[0].SetActive(false);
             currState = 0;
             vp.clip = videoClips[1];
-            race.DOFade(1, 0.5f);
-            race.loop = true;
-            race.Play();
-            StartCoroutine(CheckRace());
+            //race.DOFade(1, 0.5f);
+            //race.loop = true;
+            //race.Play();
+            //StartCoroutine(CheckRace());
             //vp.isLooping = false;
             vp.Play();
         }
@@ -106,10 +122,10 @@ public class VIdQues : MonoBehaviour
             currState = 0;
             vp.clip = videoClips[2];
             vp.Play();
-            race.DOFade(1, 0.5f);
-            race.loop = true;
-            race.Play();
-            StartCoroutine(CheckRace());
+            //race.DOFade(1, 0.5f);
+            //race.loop = true;
+            //race.Play();
+            //StartCoroutine(CheckRace());
             //vp.isLooping = false;
             
         }
@@ -121,44 +137,44 @@ public class VIdQues : MonoBehaviour
             currState = 0;
             vp.clip = videoClips[3];
             vp.Play();
-            race.Play();
+            //race.Play();
             //StartCoroutine(CheckRace());
-            StartCoroutine(EndRace());
+            //StartCoroutine(EndRace());
             //vp.isLooping = false;
 
         }        
     }
-    IEnumerator CheckRev()
-    {
-        yield return new WaitForSeconds(0.25f);
-        if (!vp.isPlaying)
-        {
-            rev.Stop();
-        }
-        else
-        {
-            StartCoroutine(CheckRev());
-        }
-    }
+    //IEnumerator CheckRev()
+    //{
+    //    yield return new WaitForSeconds(0.25f);
+    //    if (!vp.isPlaying)
+    //    {
+    //        rev.Stop();
+    //    }
+    //    else
+    //    {
+    //        StartCoroutine(CheckRev());
+    //    }
+    //}
 
-    IEnumerator CheckRace()
-    {
-        yield return new WaitForSeconds(0.5f);
-        if (!vp.isPlaying)
-        {
-            race.Stop();
-        }
-        else
-        {
-            StartCoroutine(CheckRace());
-        }
-    }
+    //IEnumerator CheckRace()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    if (!vp.isPlaying)
+    //    {
+    //        race.Stop();
+    //    }
+    //    else
+    //    {
+    //        StartCoroutine(CheckRace());
+    //    }
+    //}
 
-    IEnumerator EndRace()
-    {
-        yield return new WaitForSeconds(2f);
-        race.DOFade(0, 1f);
-        race.loop = false;
-        //race.Stop();
-    }
+    //IEnumerator EndRace()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    race.DOFade(0, 1f);
+    //    race.loop = false;
+    //    //race.Stop();
+    //}
 }
