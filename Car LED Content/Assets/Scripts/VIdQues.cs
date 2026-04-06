@@ -18,7 +18,7 @@ public class VIdQues : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (keyboard.digit1Key.wasPressedThisFrame)
+        if (keyboard.digit1Key.wasPressedThisFrame && (currState == 0 || currState == 1))
         {
             if(currState == 1)
             {
@@ -33,7 +33,7 @@ public class VIdQues : MonoBehaviour
                 questions[0].SetActive(true);
             }
         }
-        if (keyboard.digit2Key.wasPressedThisFrame)
+        if (keyboard.digit2Key.wasPressedThisFrame && (currState == 0 || currState == 2))
         {
             if (currState == 2)
             {
@@ -48,7 +48,7 @@ public class VIdQues : MonoBehaviour
                 questions[1].SetActive(true);
             }
         }
-        if (keyboard.digit3Key.wasPressedThisFrame)
+        if (keyboard.digit3Key.wasPressedThisFrame && (currState == 0 || currState == 3))
         {
             if (currState == 3)
             {
@@ -75,6 +75,7 @@ public class VIdQues : MonoBehaviour
         {
             //vp.Stop();
             //rt.Release();
+            questions[0].SetActive(false);
             vp.clip = videoClips[1];
             vp.isLooping = false;
             vp.Play();
@@ -83,6 +84,7 @@ public class VIdQues : MonoBehaviour
         {
             //vp.Stop();
             //rt.Release();
+            questions[1].SetActive(false);
             vp.clip = videoClips[2];
             vp.isLooping = false;
             vp.Play();
@@ -91,6 +93,7 @@ public class VIdQues : MonoBehaviour
         {
             //vp.Stop();
             //rt.Release();
+            questions[2].SetActive(false);
             vp.clip = videoClips[3];
             vp.isLooping = false;
             vp.Play();
