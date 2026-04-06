@@ -69,6 +69,11 @@ public class VIdQues : MonoBehaviour
             //vp.Stop();
             //rt.Release();
             vp.clip = videoClips[0];
+            questions[0].SetActive(false);
+            questions[1].SetActive(false);
+            questions[2].SetActive(false);
+            currState = 0;
+            vp.isLooping = true;
             vp.Play();
         }
         if (keyboard.xKey.wasPressedThisFrame)
@@ -76,6 +81,7 @@ public class VIdQues : MonoBehaviour
             //vp.Stop();
             //rt.Release();
             questions[0].SetActive(false);
+            currState = 0;
             vp.clip = videoClips[1];
             vp.isLooping = false;
             vp.Play();
@@ -85,6 +91,7 @@ public class VIdQues : MonoBehaviour
             //vp.Stop();
             //rt.Release();
             questions[1].SetActive(false);
+            currState = 0;
             vp.clip = videoClips[2];
             vp.isLooping = false;
             vp.Play();
@@ -94,6 +101,7 @@ public class VIdQues : MonoBehaviour
             //vp.Stop();
             //rt.Release();
             questions[2].SetActive(false);
+            currState = 0;
             vp.clip = videoClips[3];
             vp.isLooping = false;
             vp.Play();
