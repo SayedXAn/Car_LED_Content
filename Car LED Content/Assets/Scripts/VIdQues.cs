@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -9,9 +11,12 @@ public class VIdQues : MonoBehaviour
     public RenderTexture rt;
     //Keyboard keyboard = Keyboard.current;
     int currState = 0;
+
+    public AudioSource rev;
+    public AudioSource race;
     void Start()
     {
-        
+        StartCoroutine(CheckRev());
     }
 
     // Update is called once per frame
@@ -72,8 +77,12 @@ public class VIdQues : MonoBehaviour
             questions[1].SetActive(false);
             questions[2].SetActive(false);
             currState = 0;
-            vp.isLooping = true;
+            //vp.isLooping = false;
             vp.Play();
+            rev.DOFade(0, 0.5f);
+            rev.Play();
+            StartCoroutine(CheckRev());
+            
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -82,7 +91,11 @@ public class VIdQues : MonoBehaviour
             questions[0].SetActive(false);
             currState = 0;
             vp.clip = videoClips[1];
-            vp.isLooping = false;
+            race.DOFade(1, 0.5f);
+            race.loop = true;
+            race.Play();
+            StartCoroutine(CheckRace());
+            //vp.isLooping = false;
             vp.Play();
         }
         if(Input.GetKeyDown(KeyCode.C))
@@ -92,8 +105,13 @@ public class VIdQues : MonoBehaviour
             questions[1].SetActive(false);
             currState = 0;
             vp.clip = videoClips[2];
-            vp.isLooping = false;
             vp.Play();
+            race.DOFade(1, 0.5f);
+            race.loop = true;
+            race.Play();
+            StartCoroutine(CheckRace());
+            //vp.isLooping = false;
+            
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
@@ -102,9 +120,45 @@ public class VIdQues : MonoBehaviour
             questions[2].SetActive(false);
             currState = 0;
             vp.clip = videoClips[3];
-            vp.isLooping = false;
             vp.Play();
-        }
+            race.Play();
+            //StartCoroutine(CheckRace());
+            StartCoroutine(EndRace());
+            //vp.isLooping = false;
 
+        }        
+    }
+    IEnumerator CheckRev()
+    {
+        yield return new WaitForSeconds(0.25f);
+        if (!vp.isPlaying)
+        {
+            rev.Stop();
+        }
+        else
+        {
+            StartCoroutine(CheckRev());
+        }
+    }
+
+    IEnumerator CheckRace()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (!vp.isPlaying)
+        {
+            race.Stop();
+        }
+        else
+        {
+            StartCoroutine(CheckRace());
+        }
+    }
+
+    IEnumerator EndRace()
+    {
+        yield return new WaitForSeconds(2f);
+        race.DOFade(0, 1f);
+        race.loop = false;
+        //race.Stop();
     }
 }
